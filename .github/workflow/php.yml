@@ -1,0 +1,30 @@
+name: PHP Syntax Check (No Deploy)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  php-check-only:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+
+    - name: ⚡ Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2' # Đảm bảo khớp version với Laragon của bạn
+        
+    - name: 📦 Install Dependencies
+      run: |
+        if [ -f composer.json ]; then
+          composer install --no-dev --optimize-autoloader
+        fi
+
+    - name: 🔬 PHP Syntax Check
+      # Lệnh này sẽ tìm lỗi sai trong code của bạn
+      run: find . -name "*.php" -print0 | xargs -0 -n1 php -l
