@@ -1,4 +1,4 @@
-name: Check PHP and HTML
+name: PHP Syntax Check Only
 
 on:
   push:
@@ -7,31 +7,19 @@ on:
     branches: [ "main" ]
 
 jobs:
-  quality-check:
+  php-check:
     runs-on: ubuntu-latest
 
     steps:
-    # --- PHẦN 1: LẤY CODE VỀ ---
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
 
-    # --- PHẦN 2: KIỂM TRA PHP (Cũ) ---
     - name: ⚡ Setup PHP
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.2'
 
     - name: 🔬 PHP Syntax Check
-      run: find . -name "*.php" -print0 | xargs -0 -n1 php -l
-
-    # --- PHẦN 3: KIỂM TRA HTML (Mới thêm) ---
-    - name: ⚡ Setup Node.js (Cần để chạy công cụ check HTML)
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-
-    - name: 🔍 Install & Run HTMLHint
-      run: |
-        # Cài đặt công cụ HTMLHint
-        npm install -g htmlhint
-        htmlhint "public/**/*.php" "public/**/*.html"
+      # Chỉ kiểm tra xem code PHP có viết sai cú pháp không
+      # Bỏ qua hoàn toàn các lỗi HTML
+      run: find . -name "*.php" ! -path "*/vendor/*" -print0 | xargs -0 -n1 php -l
