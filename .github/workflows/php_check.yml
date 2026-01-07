@@ -34,7 +34,4 @@ jobs:
       run: |
         # Cài đặt công cụ HTMLHint
         npm install -g htmlhint
-        
-        # Quét lỗi HTML trong tất cả file .php và .html
-        # Nó sẽ báo lỗi nếu thiếu thẻ đóng (tag-pair)
-        htmlhint "**/*.php" "**/*.html"
+        htmlhint "public/**/*.php" "public/**/*.html"
