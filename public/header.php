@@ -28,7 +28,7 @@ requireLogin();
                    <button type="submit" class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
 
                    <!-- dropdown kết quả -->
-                   <div class="search-result" id="search-result">
+                   <div class="search-result" id="search-result"></div>
                </div>
            </form>
         </div>
